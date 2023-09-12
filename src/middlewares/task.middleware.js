@@ -1,5 +1,5 @@
 const { runQuery } = require('../config/database.config');
-const { fetchTaskById } = require('../queries/task');
+const { fetchTaskById } = require('../queries/task.queries');
 
 const checkValidTask = async (req, res, next) => {
   try {

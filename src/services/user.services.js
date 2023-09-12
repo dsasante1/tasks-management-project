@@ -3,7 +3,7 @@ const {
   findUserByUsername,
   fetchAllUsers,
   fetchUserById,
-} = require('../queries/user');
+} = require('../queries/user.queries');
 const { runQuery } = require('../config/database.config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

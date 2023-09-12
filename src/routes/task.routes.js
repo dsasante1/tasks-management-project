@@ -11,7 +11,7 @@ const {
 const { checkIfIdExists } = require('../middlewares/user.middleware');
 const { checkValidTask } = require('../middlewares/task.middleware');
 
-router.task('/', checkToken, checkTaskInput, createTask);
+router.post('/', checkToken, checkTaskInput, createTask);
 router.get('/', fetchAllTasks);
 router.get('/user/:id', checkIfIdExists, fetchTaskByUser);
 router.put('/:id', checkToken, checkTaskInput, checkValidTask, updateTask);

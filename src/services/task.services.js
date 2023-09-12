@@ -3,7 +3,7 @@ const {
   fetchAllTasks,
   fetchTasksByUser,
   editTask
-} = require('../queries/task');
+} = require('../queries/task.queries');
 const { runQuery } = require('../config/database.config');
 
 /**
@@ -65,7 +65,7 @@ const getTaskByUser = async (id) => {
  * @param {number} id
  * @returns {Response}
  */
-const editTask = async (title, text, id) => {
+const editATask = async (title, text, id) => {
     const result = await runQuery(editTask, [title, text, id]);
     return {
       status: 'success',
@@ -81,5 +81,5 @@ module.exports = {
   makeTask,
   getAllTasks,
   getTaskByUser,
-  editTask
+  editATask
 };

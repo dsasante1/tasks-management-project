@@ -1,4 +1,4 @@
-const checkPostInput = (req, res, next) => {
+const checkTaskInput = (req, res, next) => {
   try {
     const { title, text } = req.body;
 
@@ -26,5 +26,5 @@ const checkPostInput = (req, res, next) => {
 };
 
 module.exports = {
-    checkPostInput
+    checkTaskInput
 }
