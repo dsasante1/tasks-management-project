@@ -1,10 +1,15 @@
 const jwt = require('jsonwebtoken');
+
 const config = require('../config/env/index');
 
+
 const SECRET = config.JWT_SECRET_KEY;
+
+
 const checkToken = (req, res, next) => {
   try {
-    const token = req.headers['authorization'];
+    const token = req.headers['authorization'].split(' ')[1];
+
     if (!token) {
       return res.status(400).json({
         status: 'error',
@@ -13,12 +18,15 @@ const checkToken = (req, res, next) => {
         data: null,
       });
     }
+    
+
     const user = jwt.verify(token, SECRET);
+
     if (!user) {
       return res.status(400).json({
         status: 'error',
         code: 401,
-        message: 'You are not authorized to make ths request!',
+        message: 'You are not authorized to make this request!',
         data: null,
       });
     }

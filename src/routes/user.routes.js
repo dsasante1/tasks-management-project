@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
+
+
 const {
   createUser,
   signInUser,
   fetchAllUsers,
   fetchUserById,
 } = require('../controllers/user.controller');
+
+
 const { checkIfIdExists } = require('../middlewares/user.middleware');
 
 router.post('/signup', createUser);

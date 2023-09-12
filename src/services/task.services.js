@@ -2,8 +2,11 @@ const {
   createTask,
   fetchAllTasks,
   fetchTasksByUser,
-  editTask
+  editTask,
+  changeTaskStatus
 } = require('../queries/task.queries');
+
+
 const { runQuery } = require('../config/database.config');
 
 /**
@@ -13,8 +16,8 @@ const { runQuery } = require('../config/database.config');
  * @returns {Response}
  */
 const makeTask = async (body, id) => {
-  const { title, text } = body;
-  const task = await runQuery(createTask, [title, text, id]);
+  const { title, description } = body;
+  const task = await runQuery(createTask, [title, description, id]);
   return {
     status: 'success',
     message: 'Task created successfully!',
@@ -61,12 +64,12 @@ const getTaskByUser = async (id) => {
 /**
  * Edits a task
  * @param {string} title
- * @param {string} text
+ * @param {string} description
  * @param {number} id
  * @returns {Response}
  */
-const editATask = async (title, text, id) => {
-    const result = await runQuery(editTask, [title, text, id]);
+const editATask = async (id, title, description) => {
+    const result = await runQuery(editTask, [id, title, description]);
     return {
       status: 'success',
       message: 'Tasks edited successfully!',
@@ -77,9 +80,25 @@ const editATask = async (title, text, id) => {
     };
 }
 
+
+
+const changeTaskState = async(id) =>{
+  const result = await runQuery(changeTaskStatus, [id]);
+  return {
+    status: 'success',
+    message: 'Task completed!',
+    code: 200,
+    data: {
+      result,
+    },
+  };
+}
+
+
 module.exports = {
   makeTask,
   getAllTasks,
   getTaskByUser,
-  editATask
+  editATask,
+  changeTaskState
 };

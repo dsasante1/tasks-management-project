@@ -1,18 +1,25 @@
 const {
   addUser,
-  findUserByUsername,
+  findUserByEmail,
   fetchAllUsers,
   fetchUserById,
 } = require('../queries/user.queries');
+
+
 const { runQuery } = require('../config/database.config');
 const bcrypt = require('bcrypt');
+
 const jwt = require('jsonwebtoken');
+
 const config = require('../config/env/index');
 
+
+
+// create a user
 const createUser = async (body) => {
-  const { password, username, firstName, lastName } = body;
+  const { password, email } = body;
   // Check if user already exist in db
-  const userExist = await runQuery(findUserByUsername, [username]);
+  const userExist = await runQuery(findUserByEmail, [email]);
   if (userExist.length > 0) {
     throw {
       code: 409,
@@ -24,10 +31,8 @@ const createUser = async (body) => {
   const saltRounds = 12;
   const hash = bcrypt.hashSync(password, saltRounds);
   const response = await runQuery(addUser, [
-    firstName,
-    lastName,
-    hash,
-    username,
+   email,
+    hash
   ]);
 
   return {
@@ -38,11 +43,18 @@ const createUser = async (body) => {
   };
 };
 
-const loginUser = async (body) => {
-  const { username, password } = body;
 
+
+
+// user login
+
+const loginUser = async (body) => {
+
+  const { email, password } = body;
+  
   // Check if that user exists inside the db
-  const user = await runQuery(findUserByUsername, [username]);
+  const user = await runQuery(findUserByEmail, [email]);
+  
   if (user.length === 0) {
     throw {
       code: 404,
@@ -51,14 +63,16 @@ const loginUser = async (body) => {
       data: null,
     };
   }
+  
   // Compare user passwords
-  const { password: dbPassword, firstname, lastname, id } = user[0];
+  const { password: dbPassword, id } = user[0];
+  
   const userPassword = bcrypt.compareSync(password, dbPassword); // Boolean true/false
   if (!userPassword) {
     throw {
       code: 400,
       status: 'error',
-      message: 'Wrong username and password combination',
+      message: 'Wrong email and password combination',
       data: null,
     };
   }
@@ -71,9 +85,7 @@ const loginUser = async (body) => {
   const token = jwt.sign(
     {
       id,
-      firstname,
-      username,
-      lastname,
+      email
     },
     config.JWT_SECRET_KEY,
     options
@@ -84,9 +96,7 @@ const loginUser = async (body) => {
     code: 200,
     data: {
       id,
-      firstname,
-      lastname,
-      username,
+      email,
       token,
     },
   };

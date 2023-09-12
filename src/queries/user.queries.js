@@ -1,24 +1,22 @@
 const addUser = `
  INSERT INTO users (
-    firstname,
-    lastname,
-    password,
-    username
+    email,
+    password
  )
- VALUES ($1, $2, $3, $4) RETURNING id, firstname, lastname , username, created_at
+ VALUES ($1, $2) RETURNING id, email, created_at
 `;
 
-const findUserByUsername = `
- SELECT id, firstname, lastname, username, password FROM users WHERE username =$1
+const findUserByEmail = `
+ SELECT id, email, password FROM users WHERE email=$1
 `
 
-const fetchAllUsers = `SELECT id, firstname, lastname, username FROM users`
+const fetchAllUsers = `SELECT id, email FROM users`
 
-const fetchUserById = `SELECT id, firstname, lastname, username FROM users WHERE id=$1`
+const fetchUserById = `SELECT id, email FROM users WHERE id=$1`
 
 module.exports ={
     addUser,
-    findUserByUsername,
+    findUserByEmail,
     fetchAllUsers,
     fetchUserById
 }

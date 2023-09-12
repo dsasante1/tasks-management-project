@@ -1,6 +1,6 @@
 const checkTaskInput = (req, res, next) => {
   try {
-    const { title, text } = req.body;
+    const { title, description } = req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -11,7 +11,7 @@ const checkTaskInput = (req, res, next) => {
       });
     }
 
-    if (!text) {
+    if (!description) {
       return res.status(400).json({
         status: 'error',
         code: 400,

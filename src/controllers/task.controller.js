@@ -3,6 +3,7 @@ const {
   getAllTasks,
   getTaskByUser,
   editATask,
+  changeTaskState,
 } = require('../services/task.services');
 
 /**
@@ -56,7 +57,7 @@ const fetchTaskByUser = async (req, res, next) => {
 };
 
 /**
- * Updates a task
+ * change the details of a task
  * @param {Request} req
  * @param {Response} res
  * @param {object} next
@@ -64,18 +65,41 @@ const fetchTaskByUser = async (req, res, next) => {
  */
 const updateTask = async (req, res, next) => {
   try {
-    const { title, text } = req.body;
+    const { title, description } = req.body;
     const { id } = req.user;
-    const response = await editATask(title, text, id);
+    const response = await editATask(id, title, description);
     return res.status(response.code).json(response);
   } catch (error) {
     return next(error);
   }
 };
 
+
+
+/** 
+*complete a task
+* @param {Request} req
+* @param {Response} res
+* @param {object} next
+* @returns {JSON | Error}
+*/
+const completeTask = async (req, res, next) => {
+  try{
+    const { id } = req.user;
+
+    const response = await changeTaskState(id)
+    return res.status(response.code).json(response)
+  }catch (error) {
+    return next(error)
+  }
+}
+
+
+
 module.exports = {
   createTask,
   fetchAllTasks,
   fetchTaskByUser,
   updateTask,
+  completeTask
 };

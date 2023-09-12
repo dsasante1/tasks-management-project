@@ -1,13 +1,13 @@
 const createTask = `
 INSERT INTO tasks (
     title,
-    text,
+    description,
     user_id
-) VALUES ($1, $2, $3) RETURNING id, text, title, user_id
+) VALUES ($1, $2, $3) RETURNING id, description, title, user_id, completed
 `;
 
 const fetchAllTasks = `
-SELECT p.id, p.title, p.text,
+SELECT p.id, p.title, p.description,
 json_build_object(
     'id', u.id,
     'firstName', u.firstname,
@@ -19,17 +19,21 @@ INNER JOIN users u on p.user_id = u.id
 `;
 
 const fetchTasksByUser = `
-SELECT id, title, text FROM tasks WHERE user_id=$1
+SELECT id, title, description FROM tasks WHERE user_id=$1
 `;
 
 const editTask = `
 UPDATE tasks
-SET title=$1, text=$2
-WHERE task=$3
+SET title=$2, description=$3
+WHERE id=$1
 RETURNING *
 `;
 
 const fetchTaskById = `SELECT user_id FROM tasks WHERE id=$1`;
+
+
+const changeTaskStatus = `UPDATE tasks
+SET complete=TRUE WHERE id=$1`;
 
 module.exports = {
   createTask,
@@ -37,4 +41,5 @@ module.exports = {
   fetchTasksByUser,
   editTask,
   fetchTaskById,
+  changeTaskStatus
 };
