@@ -19,7 +19,7 @@ const { checkValidTask } = require('../middlewares/task.middleware');
 router.post('/', checkToken, checkTaskInput, createTask);
 router.get('/', fetchAllTasks);
 router.get('/user/:id', checkIfIdExists, fetchTaskByUser);
-router.put('/:id', checkToken, checkTaskInput, checkValidTask, updateTask);
-router.put('/:id', checkToken, checkValidTask, completeTask)
+router.put('/edit/:id', checkToken, checkTaskInput, checkValidTask, updateTask);
+router.put('/done/:id', checkToken, checkValidTask, completeTask)
 
 module.exports = router;

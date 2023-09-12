@@ -7,15 +7,7 @@ INSERT INTO tasks (
 `;
 
 const fetchAllTasks = `
-SELECT p.id, p.title, p.description,
-json_build_object(
-    'id', u.id,
-    'firstName', u.firstname,
-    'lastName', u.lastname,
-    'username', u.username
-) as user
-FROM tasks p
-INNER JOIN users u on p.user_id = u.id
+SELECT * FROM tasks
 `;
 
 const fetchTasksByUser = `
