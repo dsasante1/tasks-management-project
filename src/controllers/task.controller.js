@@ -65,7 +65,7 @@ const fetchTaskByUser = async (req, res, next) => {
  */
 const updateTask = async (req, res, next) => {
   try {
-    const { title, description } = req.body;
+    const {title, description } = req.body;
     const { id } = req.user;
     const response = await editATask(id, title, description);
     return res.status(response.code).json(response);

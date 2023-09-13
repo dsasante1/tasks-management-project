@@ -21,11 +21,11 @@ WHERE id=$1
 RETURNING *
 `;
 
-const fetchTaskById = `SELECT user_id FROM tasks WHERE id=$1`;
+const fetchTaskById = `SELECT id, title, description, user_id FROM tasks WHERE id=$1`;
 
 
 const changeTaskStatus = `UPDATE tasks
-SET complete=TRUE WHERE id=$1`;
+SET completed=TRUE WHERE id=$1 RETURNING *`;
 
 module.exports = {
   createTask,
