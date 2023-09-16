@@ -24,9 +24,9 @@ module.exports.appErrorHandler = function appErrorHandler(err, req, res, next) {
     if (err.code && typeof err.code === 'number') {
         console.log(`
       status - ${err.code}
-      message - ${err.message} 
-      url - ${req.originalUrl} 
-      method - ${req.method} 
+      message - ${err.message}
+      url - ${req.originalUrl}
+      method - ${req.method}
       IP - ${req.ip}
     `);
 
@@ -49,10 +49,10 @@ module.exports.appErrorHandler = function appErrorHandler(err, req, res, next) {
  */
 module.exports.genericErrorHandler = function genericErrorHandler(err, req, res, next) {
     console.log(`
-    status - 500 
-    message - ${err.stack} 
-    url - ${req.originalUrl} 
-    method - ${req.method} 
+    status - 500
+    message - ${err.stack}
+    url - ${req.originalUrl}
+    method - ${req.method}
     IP - ${req.ip}
   `);
 

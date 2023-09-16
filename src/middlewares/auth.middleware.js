@@ -18,7 +18,7 @@ const checkToken = (req, res, next) => {
         data: null,
       });
     }
-    
+
 
     const user = jwt.verify(token, SECRET);
 
